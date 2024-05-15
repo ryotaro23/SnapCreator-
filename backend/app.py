@@ -23,6 +23,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
+# ファイルアップロードエンドポイント
 @app.route('/api/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
@@ -43,6 +44,16 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in {'mp4', 'avi', 'mov'}  # 許可されるファイル拡張子
     # ファイルアップロードのロジック
 
+
+@app.errorhandler(500)
+def internal_error(error):
+    print("500 Internal Server Error")
+    return "500 error", 500
+
+@app.errorhandler(404)
+def not_found_error(error):
+    print("404 Page not found Error")
+    return "404 error", 404
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)

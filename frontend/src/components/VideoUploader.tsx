@@ -25,14 +25,16 @@ const VideoUploader: React.FC<VideoUploaderProps> = ({ onUpload }) => {
     formData.append('file', file);
 
     try {
-      const response = await fetch('/api/upload', {
+      const response = await fetch('http://localhost:5000/api/upload', {
         method: 'POST',
         body: formData,
       });
 
       if (response.ok) {
         const result = await response.json();
+        console.log(result)
         onUpload(file);
+        console.log(response)
         alert('Upload successful!');
       } else {
         console.log(response)
